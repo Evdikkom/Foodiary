@@ -18,7 +18,7 @@ data class MealEntity(
     val foodId: String,
 
     // Количество продукта в граммах
-    val quantity: Double,
+    val quantityInGrams: Double,
 
     // Тип приёма пищи (завтрак, обед и т.д.)
     val mealType: MealType,

@@ -1,40 +1,30 @@
 package com.example.foodiary.data.local.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.foodiary.data.local.entity.MealEntity
-import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 
-/**
- * MealDao — DAO для работы с приёмами пищи.
- */
 @Dao
 interface MealDao {
 
+    /**
+     * Вставка списка приёмов пищи.
+     * Используется для seeding и batch-операций.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMeal(meal: MealEntity)
+    suspend fun insertAll(meals: List<MealEntity>)
 
-    @Update
-    suspend fun updateMeal(meal: MealEntity)
-
-    @Delete
-    suspend fun deleteMeal(meal: MealEntity)
-
-    @Query(
-        """
+    /**
+     * Получение приёмов пищи за период времени.
+     */
+    @Query("""
         SELECT * FROM meals
-        WHERE date = :date
-        ORDER BY time ASC
-        """
-    )
-    fun getMealsByDate(date: LocalDate): Flow<List<MealEntity>>
-
-    @Query(
-        """
-        SELECT * FROM meals
-        WHERE id = :mealId
-        LIMIT 1
-        """
-    )
-    suspend fun getMealById(mealId: Long): MealEntity?
+        WHERE timestamp BETWEEN :start AND :end
+    """)
+    suspend fun getMealsForPeriod(
+        start: Long,
+        end: Long
+    ): List<MealEntity>
 }

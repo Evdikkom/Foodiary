@@ -17,10 +17,10 @@ data class FoodEntity(
     val name: String,
 
     // Пищевая ценность на 100 грамм
-    val calories: Double,
-    val protein: Double,
-    val fat: Double,
-    val carbs: Double,
+    val caloriesPer100g: Double,
+    val proteinPer100g: Double,
+    val fatPer100g: Double,
+    val carbsPer100g: Double,
 
     // Категория продукта (овощи, фрукты, мясо и т.п.)
     val category: String = "other",
