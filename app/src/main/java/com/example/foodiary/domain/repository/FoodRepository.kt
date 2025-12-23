@@ -1,14 +1,9 @@
 package com.example.foodiary.domain.repository
 
+import kotlinx.coroutines.flow.Flow
 import com.example.foodiary.domain.model.Food
 
-/**
- * FoodRepository — контракт доступа к данным о продуктах питания.
- */
 interface FoodRepository {
-
-    /**
-     * Возвращает продукт по его идентификатору.
-     */
     suspend fun getFoodById(foodId: String): Food
+    fun searchFoods(query: String): Flow<List<Food>>
 }

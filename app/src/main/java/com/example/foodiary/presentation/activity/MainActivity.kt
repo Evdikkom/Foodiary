@@ -1,14 +1,11 @@
 package com.example.foodiary.presentation.activity
 
+import android.widget.Toast
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.foodiary.R
 import com.example.foodiary.presentation.fragment.DailyNutritionFragment
 
-/**
- * MainActivity — главный контейнер приложения Foodiary.
- * Отвечает за отображение корневых экранов приложения.
- */
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +14,10 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    DailyNutritionFragment()
-                )
+                .replace(R.id.fragmentContainer, DailyNutritionFragment())
                 .commit()
         }
+
+        Toast.makeText(this, "MainActivity: onCreate", Toast.LENGTH_SHORT).show()
     }
 }

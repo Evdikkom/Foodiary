@@ -1,77 +1,79 @@
 package com.example.foodiary.presentation.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.foodiary.databinding.FragmentDailyNutritionBinding
+import com.example.foodiary.R
+import com.example.foodiary.data.local.database.AppDatabase
+import com.example.foodiary.data.repository.FoodRepositoryImpl
+import com.example.foodiary.data.repository.MealRepositoryImpl
+import com.example.foodiary.domain.usecase.GetDailyNutritionUseCase
 import com.example.foodiary.presentation.viewmodel.GetDailyNutritionViewModel
+import com.example.foodiary.presentation.viewmodel.GetDailyNutritionViewModelFactory
 import java.util.Calendar
+import com.example.foodiary.presentation.fragment.AddMealFragment
 
-/**
- * DailyNutritionFragment — экран суточной аналитики питания.
- * Отображает калории, БЖУ и статистику приёмов пищи.
- */
-class DailyNutritionFragment : Fragment() {
+class DailyNutritionFragment : Fragment(R.layout.fragment_daily_nutrition) {
 
-    private var _binding: FragmentDailyNutritionBinding? = null
-    private val binding get() = _binding!!
-
-    private val viewModel: GetDailyNutritionViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentDailyNutritionBinding.inflate(inflater, container, false)
-        return binding.root
+    private val viewModel: GetDailyNutritionViewModel by viewModels {
+        GetDailyNutritionViewModelFactory(provideUseCase())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeViewModel()
-        loadTodayNutrition()
+        observeViewModel(view)
+        loadToday()
+
+        val btn = view.findViewById<Button>(R.id.buttonOpenAddMeal)
+        btn.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, AddMealFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
     }
 
-    private fun observeViewModel() {
+    override fun onResume() {
+        super.onResume()
+        loadToday()
+    }
+    private fun observeViewModel(root: View) {
+        val progress = root.findViewById<View>(R.id.progressBar)
+        val error = root.findViewById<android.widget.TextView>(R.id.textError)
 
-        viewModel.dailyNutrition.observe(viewLifecycleOwner) { nutrition ->
-            binding.textCalories.text =
-                "Калории: ${nutrition.totalCalories.toInt()} ккал"
-
-            binding.textProtein.text =
-                "Белки: ${nutrition.totalProtein.toInt()} г"
-
-            binding.textFat.text =
-                "Жиры: ${nutrition.totalFat.toInt()} г"
-
-            binding.textCarbs.text =
-                "Углеводы: ${nutrition.totalCarbs.toInt()} г"
-
-            binding.textMealsCount.text =
-                "Приёмов пищи: ${nutrition.mealsCount}"
-        }
+        val calories = root.findViewById<android.widget.TextView>(R.id.textCalories)
+        val protein = root.findViewById<android.widget.TextView>(R.id.textProtein)
+        val fat = root.findViewById<android.widget.TextView>(R.id.textFat)
+        val carbs = root.findViewById<android.widget.TextView>(R.id.textCarbs)
+        val mealsCount = root.findViewById<android.widget.TextView>(R.id.textMealsCount)
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility =
-                if (isLoading) View.VISIBLE else View.GONE
+            progress.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { error ->
-            binding.textError.visibility =
-                if (error != null) View.VISIBLE else View.GONE
-            binding.textError.text = error
+        viewModel.error.observe(viewLifecycleOwner) { message ->
+            if (message.isNullOrBlank()) {
+                error.visibility = View.GONE
+            } else {
+                error.visibility = View.VISIBLE
+                error.text = message
+            }
+        }
+
+        viewModel.dailyNutrition.observe(viewLifecycleOwner) { dn ->
+            calories.text = "Калории: ${dn.totalCalories.toInt()} ккал"
+            protein.text = "Белки: ${dn.totalProtein.toInt()} г"
+            fat.text = "Жиры: ${dn.totalFat.toInt()} г"
+            carbs.text = "Углеводы: ${dn.totalCarbs.toInt()} г"
+            mealsCount.text = "Приёмов пищи: ${dn.mealsCount}"
         }
     }
 
-    /**
-     * Загружает аналитику за текущий день.
-     */
-    private fun loadTodayNutrition() {
+    private fun loadToday() {
         val calendar = Calendar.getInstance()
 
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -86,8 +88,22 @@ class DailyNutritionFragment : Fragment() {
         viewModel.loadDailyNutrition(startOfDay, endOfDay)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun provideUseCase(): GetDailyNutritionUseCase {
+        val database = AppDatabase.getInstance(requireContext())
+
+        val foodRepository = FoodRepositoryImpl(
+            foodDao = database.foodDao()
+        )
+
+        val mealRepository = MealRepositoryImpl(
+            mealDao = database.mealDao(),
+            foodRepository = foodRepository
+        )
+
+        return GetDailyNutritionUseCase(
+            mealRepository = mealRepository,
+            foodRepository = foodRepository
+        )
+
     }
 }

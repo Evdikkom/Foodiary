@@ -9,22 +9,17 @@ import com.example.foodiary.data.local.entity.MealEntity
 @Dao
 interface MealDao {
 
-    /**
-     * Вставка списка приёмов пищи.
-     * Используется для seeding и batch-операций.
-     */
+    @Query("""
+        SELECT * FROM meals
+        WHERE timestamp >= :startTimestamp AND timestamp < :endTimestamp
+        ORDER BY timestamp DESC
+    """)
+    suspend fun getMealsForPeriod(startTimestamp: Long, endTimestamp: Long): List<MealEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(meals: List<MealEntity>)
 
-    /**
-     * Получение приёмов пищи за период времени.
-     */
-    @Query("""
-        SELECT * FROM meals
-        WHERE timestamp BETWEEN :start AND :end
-    """)
-    suspend fun getMealsForPeriod(
-        start: Long,
-        end: Long
-    ): List<MealEntity>
+    @Insert
+    suspend fun insert(meal: MealEntity): Long
+
 }

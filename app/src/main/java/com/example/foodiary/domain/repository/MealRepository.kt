@@ -27,4 +27,7 @@ interface MealRepository {
         startOfDay: Long,
         endOfDay: Long
     ): DailyNutrition
+
+    suspend fun addMeal(meal: Meal): Long
+
 }
