@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- ЕДИНСТВЕННЫЙ прямой child ScrollView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +57,63 @@
             android:hint="Заметка (необязательно)"
             android:layout_marginTop="12dp" />
 
+        <!-- Блок импорта (внутри общего LinearLayout) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Импорт продукта по штрихкоду (OpenFoodFacts)"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <EditText
+                android:id="@+id/editBarcode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Штрихкод (например 5901234123457)"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/buttonImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Импорт"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonSearchRemote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Искать в OpenFoodFacts"
+            android:layout_marginTop="8dp" />
+
+        <ProgressBar
+            android:id="@+id/progressRemoteSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="6dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerRemoteFoods"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="8dp" />
+
+        <ProgressBar
+            android:id="@+id/progressImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="6dp" />
+
         <TextView
             android:id="@+id/textError"
             android:layout_width="match_parent"
@@ -78,4 +136,5 @@
             android:layout_marginTop="12dp" />
 
     </LinearLayout>
+
 </ScrollView>

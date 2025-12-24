@@ -69,4 +69,8 @@ class MealRepositoryImpl(
     override suspend fun addMeal(meal: Meal): Long {
         return mealDao.insert(meal.toEntity())
     }
+
+    override suspend fun deleteMeal(mealId: Long) {
+        mealDao.deleteById(mealId)
+    }
 }

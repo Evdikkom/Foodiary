@@ -64,5 +64,18 @@
             android:text="Добавить приём пищи"
             android:layout_marginTop="12dp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сегодняшние приёмы пищи"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerMealsToday"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
 </ScrollView>

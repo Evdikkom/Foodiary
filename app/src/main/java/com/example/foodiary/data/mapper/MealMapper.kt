@@ -11,6 +11,7 @@ import com.example.foodiary.domain.model.Meal
 
 fun MealEntity.toDomain(): Meal {
     return Meal(
+        id = id,
         foodId = foodId,
         quantityInGrams = quantityInGrams,
         mealType = mealType,
@@ -21,6 +22,7 @@ fun MealEntity.toDomain(): Meal {
 
 fun Meal.toEntity(): MealEntity {
     return MealEntity(
+        id = id,
         foodId = foodId,
         quantityInGrams = quantityInGrams,
         mealType = mealType,

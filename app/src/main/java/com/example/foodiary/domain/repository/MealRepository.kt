@@ -30,4 +30,6 @@ interface MealRepository {
 
     suspend fun addMeal(meal: Meal): Long
 
+    suspend fun deleteMeal(mealId: Long)
+
 }

@@ -22,4 +22,7 @@ interface MealDao {
     @Insert
     suspend fun insert(meal: MealEntity): Long
 
+    @Query("DELETE FROM meals WHERE id = :mealId")
+    suspend fun deleteById(mealId: Long)
+
 }

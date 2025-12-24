@@ -59,4 +59,16 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    // Retrofit + Gson
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+// OkHttp
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+// Gson (на всякий случай — обычно хватает converter-gson, но пусть будет явно)
+    implementation("com.google.code.gson:gson:2.10.1")
+
 }

@@ -1,34 +1,37 @@
 package com.example.foodiary.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.example.foodiary.domain.model.FoodSearchItem
 import com.example.foodiary.domain.model.Meal
 import com.example.foodiary.domain.model.MealType
 import com.example.foodiary.domain.repository.FoodRepository
 import com.example.foodiary.domain.usecase.AddMealUseCase
+import com.example.foodiary.domain.usecase.ImportFoodByBarcodeUseCase
+import com.example.foodiary.domain.usecase.SearchFoodsByNameUseCase
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import androidx.lifecycle.asLiveData
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 
 class AddMealViewModel(
     private val foodRepository: FoodRepository,
-    private val addMealUseCase: AddMealUseCase
+    private val addMealUseCase: AddMealUseCase,
+    private val importFoodByBarcodeUseCase: ImportFoodByBarcodeUseCase,
+    private val searchFoodsByNameUseCase: SearchFoodsByNameUseCase
 ) : ViewModel() {
 
     private val _selectedFoodId = MutableLiveData<String?>()
     val selectedFoodId: LiveData<String?> = _selectedFoodId
 
-    private val _selectedFoodName = MutableLiveData<String>("Не выбран продукт")
+    private val _selectedFoodName = MutableLiveData("Не выбран продукт")
     val selectedFoodName: LiveData<String> = _selectedFoodName
 
     private val _isSaving = MutableLiveData(false)
     val isSaving: LiveData<Boolean> = _isSaving
+
+    private val _isImporting = MutableLiveData(false)
+    val isImporting: LiveData<Boolean> = _isImporting
+
+    private val _isRemoteSearching = MutableLiveData(false)
+    val isRemoteSearching: LiveData<Boolean> = _isRemoteSearching
 
     private val _error = MutableLiveData<String?>(null)
     val error: LiveData<String?> = _error
@@ -36,6 +39,26 @@ class AddMealViewModel(
     private val _saved = MutableLiveData(false)
     val saved: LiveData<Boolean> = _saved
 
+    private val _remoteFoods = MutableLiveData<List<FoodSearchItem>>(emptyList())
+    val remoteFoods: LiveData<List<FoodSearchItem>> = _remoteFoods
+
+    // ---------------- Локальный поиск (Room) ----------------
+    private val searchQuery = MutableStateFlow("")
+
+    val foods = searchQuery
+        .debounce(250)
+        .distinctUntilChanged()
+        .flatMapLatest { q ->
+            if (q.isBlank()) flowOf(emptyList())
+            else foodRepository.searchFoods(q)
+        }
+        .asLiveData()
+
+    fun onSearchQueryChanged(query: String) {
+        searchQuery.value = query.trim()
+    }
+
+    // ---------------- Выбор продукта (локально) ----------------
     fun selectFood(foodId: String) {
         viewModelScope.launch {
             _error.value = null
@@ -45,6 +68,7 @@ class AddMealViewModel(
         }
     }
 
+    // ---------------- Сохранение Meal (приём пищи) ----------------
     fun saveMeal(
         quantityInGrams: Double,
         mealType: MealType,
@@ -82,19 +106,64 @@ class AddMealViewModel(
         }
     }
 
-    private val searchQuery = MutableStateFlow("")
-
-    val foods = searchQuery
-        .debounce(250)
-        .distinctUntilChanged()
-        .flatMapLatest { q ->
-            if (q.isBlank()) flowOf(emptyList())
-            else foodRepository.searchFoods(q)
+    // ---------------- Импорт по штрихкоду (barcode) ----------------
+    fun importByBarcode(barcodeRaw: String) {
+        val barcode = barcodeRaw.trim()
+        if (barcode.isBlank()) {
+            _error.value = "Введите штрихкод"
+            return
         }
-        .asLiveData()
 
-    fun onSearchQueryChanged(query: String) {
-        searchQuery.value = query.trim()
+        viewModelScope.launch {
+            _isImporting.value = true
+            _error.value = null
+            try {
+                val importedFood = importFoodByBarcodeUseCase(barcode)
+                selectFood(importedFood.id)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Ошибка импорта продукта"
+            } finally {
+                _isImporting.value = false
+            }
+        }
     }
 
+    // ---------------- Поиск в OpenFoodFacts по словам ----------------
+    fun searchRemoteByName(queryRaw: String) {
+        val query = queryRaw.trim()
+        if (query.isBlank()) {
+            _remoteFoods.value = emptyList()
+            return
+        }
+
+        viewModelScope.launch {
+            _isRemoteSearching.value = true
+            _error.value = null
+            try {
+                val results = searchFoodsByNameUseCase(query = query, page = 1, pageSize = 20)
+                _remoteFoods.value = results
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Ошибка поиска в OpenFoodFacts"
+            } finally {
+                _isRemoteSearching.value = false
+            }
+        }
+    }
+
+    // ---------------- Импорт выбранного remote-результата ----------------
+    fun importFromRemoteItem(item: FoodSearchItem) {
+        viewModelScope.launch {
+            _isImporting.value = true
+            _error.value = null
+            try {
+                val importedFood = importFoodByBarcodeUseCase(item.barcode)
+                // после импорта — выбираем продукт для текущего приёма пищи
+                selectFood(importedFood.id)
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Ошибка импорта продукта"
+            } finally {
+                _isImporting.value = false
+            }
+        }
+    }
 }
