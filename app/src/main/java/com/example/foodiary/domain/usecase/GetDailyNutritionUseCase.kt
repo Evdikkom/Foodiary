@@ -25,7 +25,7 @@ class GetDailyNutritionUseCase(
         val mealsByType = mutableMapOf<MealType, Int>()
 
         meals.forEach { meal ->
-            val food = foodRepository.getFoodById(meal.foodId) ?: return@forEach
+            val food = foodRepository.getFoodById(meal.foodId)
             val factor = meal.quantityInGrams / 100.0
 
             totalCalories += food.caloriesPer100g * factor

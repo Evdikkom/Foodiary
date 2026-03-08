@@ -1,6 +1,5 @@
 package com.example.foodiary.presentation.activity
 
-import android.widget.Toast
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.foodiary.R
@@ -17,7 +16,5 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragmentContainer, DailyNutritionFragment())
                 .commit()
         }
-
-        Toast.makeText(this, "MainActivity: onCreate", Toast.LENGTH_SHORT).show()
     }
 }

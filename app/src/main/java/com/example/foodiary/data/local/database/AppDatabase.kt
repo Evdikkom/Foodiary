@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.foodiary.data.local.dao.FoodDao
 import com.example.foodiary.data.local.dao.MealDao
 import com.example.foodiary.data.local.entity.FoodEntity
@@ -12,12 +13,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-
 @Database(
     entities = [FoodEntity::class, MealEntity::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun foodDao(): FoodDao
@@ -46,7 +47,6 @@ abstract class AppDatabase : RoomDatabase() {
                     }
             }
 
-            // Засев запускаем уже ПОСЛЕ того, как INSTANCE гарантированно установлен
             ensureSeed(db)
 
             return db
@@ -56,7 +56,7 @@ abstract class AppDatabase : RoomDatabase() {
             if (SEED_STARTED) return
             SEED_STARTED = true
 
-            kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val foodDao = db.foodDao()
                     val mealDao = db.mealDao()
@@ -128,5 +128,4 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
     }
-
 }
