@@ -13,6 +13,8 @@ data class OffSearchProductDto(
     @SerializedName("code") val code: String? = null,
     @SerializedName("product_name") val productName: String? = null,
     @SerializedName("brands") val brands: String? = null,
+    @SerializedName("image_front_small_url") val imageFrontSmallUrl: String? = null,
+    @SerializedName("image_front_url") val imageFrontUrl: String? = null,
     @SerializedName("nutriments") val nutriments: OffNutrimentsDto? = null
 )
 

@@ -11,12 +11,13 @@ data class OffProductResponseDto(
 
 data class OffProductDto(
     @SerializedName("product_name") val productName: String? = null,
+    @SerializedName("image_front_small_url") val imageFrontSmallUrl: String? = null,
+    @SerializedName("image_front_url") val imageFrontUrl: String? = null,
     @SerializedName("nutriments") val nutriments: OffNutrimentsDto? = null,
     @SerializedName("last_modified_t") val lastModifiedT: Long? = null
 )
 
 data class OffNutrimentsDto(
-    // OFF обычно хранит значения на 100g в полях *_100g
     @SerializedName("energy-kcal_100g") val kcal100g: Double? = null,
     @SerializedName("proteins_100g") val proteins100g: Double? = null,
     @SerializedName("fat_100g") val fat100g: Double? = null,

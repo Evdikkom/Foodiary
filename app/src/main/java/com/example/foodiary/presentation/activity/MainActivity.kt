@@ -11,7 +11,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        if (currentFragment == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, DailyNutritionFragment())
                 .commit()

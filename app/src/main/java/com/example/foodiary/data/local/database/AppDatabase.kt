@@ -9,13 +9,14 @@ import com.example.foodiary.data.local.dao.FoodDao
 import com.example.foodiary.data.local.dao.MealDao
 import com.example.foodiary.data.local.entity.FoodEntity
 import com.example.foodiary.data.local.entity.MealEntity
+import com.example.foodiary.domain.model.MealType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Database(
     entities = [FoodEntity::class, MealEntity::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -62,7 +63,6 @@ abstract class AppDatabase : RoomDatabase() {
                     val mealDao = db.mealDao()
 
                     val foodsCount = foodDao.countFoods()
-
                     android.util.Log.d("DB_SEED", "foodsCount(before)=$foodsCount")
 
                     if (foodsCount == 0) {
@@ -70,6 +70,7 @@ abstract class AppDatabase : RoomDatabase() {
                             FoodEntity(
                                 id = "chicken_breast",
                                 name = "Куриная грудка",
+                                imageUrl = "drawable://chicken_breast",
                                 caloriesPer100g = 165.0,
                                 proteinPer100g = 31.0,
                                 fatPer100g = 3.6,
@@ -78,6 +79,7 @@ abstract class AppDatabase : RoomDatabase() {
                             FoodEntity(
                                 id = "rice",
                                 name = "Рис",
+                                imageUrl = "drawable://rice",
                                 caloriesPer100g = 130.0,
                                 proteinPer100g = 2.7,
                                 fatPer100g = 0.3,
@@ -86,10 +88,20 @@ abstract class AppDatabase : RoomDatabase() {
                             FoodEntity(
                                 id = "apple",
                                 name = "Яблоко",
+                                imageUrl = "drawable://apple",
                                 caloriesPer100g = 52.0,
                                 proteinPer100g = 0.3,
                                 fatPer100g = 0.2,
                                 carbsPer100g = 14.0
+                            ),
+                            FoodEntity(
+                                id = "banana",
+                                name = "Банан",
+                                imageUrl = "drawable://banana",
+                                caloriesPer100g = 89.0,
+                                proteinPer100g = 1.1,
+                                fatPer100g = 0.3,
+                                carbsPer100g = 22.8
                             )
                         )
                         foodDao.insertAll(foods)
@@ -99,20 +111,20 @@ abstract class AppDatabase : RoomDatabase() {
                             MealEntity(
                                 foodId = "chicken_breast",
                                 quantityInGrams = 200.0,
-                                mealType = com.example.foodiary.domain.model.MealType.LUNCH,
+                                mealType = MealType.LUNCH,
                                 timestamp = now,
                                 note = "Тестовый обед"
                             ),
                             MealEntity(
                                 foodId = "rice",
                                 quantityInGrams = 150.0,
-                                mealType = com.example.foodiary.domain.model.MealType.LUNCH,
+                                mealType = MealType.LUNCH,
                                 timestamp = now
                             ),
                             MealEntity(
                                 foodId = "apple",
                                 quantityInGrams = 120.0,
-                                mealType = com.example.foodiary.domain.model.MealType.SNACK,
+                                mealType = MealType.SNACK,
                                 timestamp = now
                             )
                         )

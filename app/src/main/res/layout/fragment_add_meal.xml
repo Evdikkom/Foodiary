@@ -1,139 +1,360 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFDF7">
 
-    <!-- ЕДИНСТВЕННЫЙ прямой child ScrollView -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <TextView
+            android:id="@+id/textTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Добавление приёма пищи"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/editSearchFood"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Поиск продукта (например: яблоко)"
-            android:layout_marginTop="12dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFoods"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginTop="8dp" />
+            android:text="Добавить приём пищи"
+            android:textColor="#2F2433"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textSelectedFood"
+            android:id="@+id/textSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Не выбран продукт"
-            android:layout_marginTop="12dp" />
-
-        <EditText
-            android:id="@+id/editQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Количество (граммы)"
-            android:inputType="numberDecimal"
-            android:layout_marginTop="12dp" />
-
-        <Spinner
-            android:id="@+id/spinnerMealType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
-
-        <EditText
-            android:id="@+id/editNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Заметка (необязательно)"
-            android:layout_marginTop="12dp" />
-
-        <!-- Блок импорта (внутри общего LinearLayout) -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Импорт продукта по штрихкоду (OpenFoodFacts)"
-            android:textSize="14sp"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="6dp"
+            android:text="Сначала найдите продукт в своей базе. Если его нет — подключите общую базу или поиск по штрихкоду."
+            android:textColor="#6B5B73"
+            android:textSize="14sp" />
 
         <LinearLayout
+            android:id="@+id/cardLocalSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="6dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_addmeal_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Поиск в вашей базе"
+                android:textColor="#2F2433"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editBarcode"
-                android:layout_width="0dp"
+                android:id="@+id/editSearchFood"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Штрихкод (например 5901234123457)"
-                android:inputType="number" />
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_input"
+                android:hint="Например: яблоко"
+                android:minHeight="48dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp" />
 
-            <Button
-                android:id="@+id/buttonImport"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textLocalResultsHint"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Импорт"
-                android:layout_marginStart="8dp" />
+                android:layout_marginTop="10dp"
+                android:text="В локальной базе пока ничего не найдено."
+                android:textColor="#7A5D00"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerFoods"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonSearchRemote"
+        <LinearLayout
+            android:id="@+id/cardRemoteEntry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Искать в OpenFoodFacts"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_addmeal_soft_card"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <ProgressBar
-            android:id="@+id/progressRemoteSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="6dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Не нашли нужный продукт?"
+                android:textColor="#2F2433"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerRemoteFoods"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Подключите общую базу продуктов и попробуйте тот же запрос там."
+                android:textColor="#6B5B73"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonToggleRemote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_primary_button"
+                android:text="Найти в общей базе продуктов"
+                android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:id="@+id/layoutRemoteSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Поиск выполнится по тому же запросу, который вы ввели выше."
+                    android:textColor="#6B5B73"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/buttonSearchRemote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_addmeal_secondary_button"
+                    android:text="Искать в общей базе"
+                    android:textColor="#FFFFFF" />
+
+                <ProgressBar
+                    android:id="@+id/progressRemoteSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/textRemoteSearchStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#6B5B73"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerRemoteFoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="10dp" />
+
+                <Button
+                    android:id="@+id/buttonShowMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_addmeal_secondary_button"
+                    android:text="Показать ещё"
+                    android:textColor="#FFFFFF"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cardBarcodeEntry"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:layout_marginTop="8dp" />
-
-        <ProgressBar
-            android:id="@+id/progressImport"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="6dp" />
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_addmeal_soft_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Или добавьте по штрихкоду"
+                android:textColor="#2F2433"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Позже сюда можно будет подключить камеру и сканирование."
+                android:textColor="#6B5B73"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/buttonToggleBarcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_secondary_button"
+                android:text="Добавить по штрихкоду"
+                android:textColor="#FFFFFF" />
+
+            <LinearLayout
+                android:id="@+id/layoutBarcodeSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editBarcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_addmeal_input"
+                    android:hint="Штрихкод, например 5901234123457"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="12dp" />
+
+                <Button
+                    android:id="@+id/buttonImport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_addmeal_primary_button"
+                    android:text="Добавить продукт"
+                    android:textColor="#FFFFFF" />
+
+                <ProgressBar
+                    android:id="@+id/progressImport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cardSelectedFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_addmeal_card"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Выбранный продукт"
+                android:textColor="#6B5B73"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/textSelectedFood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Продукт ещё не выбран"
+                android:textColor="#2F2433"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textSelectedFoodNutrition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="#6B5B73"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imageSelectedFood"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/bg_addmeal_image_rounded"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cardMealDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_addmeal_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Параметры приёма пищи"
+                android:textColor="#2F2433"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_input"
+                android:hint="Количество (г)"
+                android:inputType="numberDecimal"
+                android:minHeight="48dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp" />
+
+            <Spinner
+                android:id="@+id/spinnerMealType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_input" />
+
+            <EditText
+                android:id="@+id/editNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_addmeal_input"
+                android:hint="Заметка (необязательно)"
+                android:minHeight="48dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="14dp"
+            android:textColor="#A33A3A"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/buttonSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_addmeal_primary_button"
             android:text="Сохранить приём пищи"
-            android:layout_marginTop="12dp" />
+            android:textColor="#FFFFFF" />
 
         <ProgressBar
             android:id="@+id/progressSaving"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

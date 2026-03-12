@@ -4,6 +4,7 @@ data class FoodSearchItem(
     val barcode: String,
     val name: String,
     val brand: String?,
+    val imageUrl: String?,
     val caloriesPer100g: Double?,
     val proteinPer100g: Double?,
     val fatPer100g: Double?,

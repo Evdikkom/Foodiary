@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.foodiary.domain.repository.FoodRepository
 import com.example.foodiary.domain.usecase.AddMealUseCase
 import com.example.foodiary.domain.usecase.ImportFoodByBarcodeUseCase
+import com.example.foodiary.domain.usecase.ImportFoodFromSearchItemUseCase
 import com.example.foodiary.domain.usecase.SearchFoodsByNameUseCase
 
 class AddMealViewModelFactory(
     private val foodRepository: FoodRepository,
     private val addMealUseCase: AddMealUseCase,
     private val importFoodByBarcodeUseCase: ImportFoodByBarcodeUseCase,
+    private val importFoodFromSearchItemUseCase: ImportFoodFromSearchItemUseCase,
     private val searchFoodsByNameUseCase: SearchFoodsByNameUseCase
 ) : ViewModelProvider.Factory {
 
@@ -21,6 +23,7 @@ class AddMealViewModelFactory(
                 foodRepository = foodRepository,
                 addMealUseCase = addMealUseCase,
                 importFoodByBarcodeUseCase = importFoodByBarcodeUseCase,
+                importFoodFromSearchItemUseCase = importFoodFromSearchItemUseCase,
                 searchFoodsByNameUseCase = searchFoodsByNameUseCase
             ) as T
         }

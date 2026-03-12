@@ -7,6 +7,7 @@ fun FoodEntity.toDomain(): Food {
     return Food(
         id = id,
         name = name,
+        imageUrl = imageUrl,
         caloriesPer100g = caloriesPer100g,
         proteinPer100g = proteinPer100g,
         fatPer100g = fatPer100g,

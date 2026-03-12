@@ -1,7 +1,6 @@
 package com.example.foodiary.data.remote.off
 
 import com.example.foodiary.data.local.entity.FoodEntity
-import kotlin.math.roundToInt
 
 object OffFoodMapper {
 
@@ -13,18 +12,18 @@ object OffFoodMapper {
         val fat = nutr?.fat100g ?: 0.0
         val carbs = nutr?.carbs100g ?: 0.0
 
-        // ВАЖНО: вы ранее решили “убираем foodId полностью” в части Meal,
-        // но FoodEntity как справочник продуктов сохраняем — поэтому id делаем от barcode.
+        val imageUrl = dto.imageFrontSmallUrl?.trim()?.ifBlank {
+            dto.imageFrontUrl?.trim()
+        } ?: dto.imageFrontUrl?.trim()
+
         return FoodEntity(
             id = "off_$barcode",
             name = dto.productName?.takeIf { it.isNotBlank() } ?: "Продукт $barcode",
+            imageUrl = imageUrl,
             caloriesPer100g = calories,
             proteinPer100g = protein,
             fatPer100g = fat,
-            carbsPer100g = carbs,
-            // если у вас есть поля category/isCustom/externalId — заполните их здесь
-            // externalId = barcode,
-            // isCustom = false,
+            carbsPer100g = carbs
         )
     }
 }

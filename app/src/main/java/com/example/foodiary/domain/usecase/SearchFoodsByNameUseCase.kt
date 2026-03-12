@@ -1,6 +1,6 @@
 package com.example.foodiary.domain.usecase
 
-import com.example.foodiary.domain.model.FoodSearchItem
+import com.example.foodiary.domain.model.RemoteFoodSearchPage
 import com.example.foodiary.domain.repository.FoodImportRepository
 
 class SearchFoodsByNameUseCase(
@@ -10,7 +10,11 @@ class SearchFoodsByNameUseCase(
         query: String,
         page: Int = 1,
         pageSize: Int = 20
-    ): List<FoodSearchItem> {
-        return repo.searchByName(query = query, page = page, pageSize = pageSize)
+    ): RemoteFoodSearchPage {
+        return repo.searchByName(
+            query = query,
+            page = page,
+            pageSize = pageSize
+        )
     }
 }
