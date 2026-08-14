@@ -323,6 +323,16 @@ copy .env.example .env
 
 ## Возможные проблемы и решения
 
+### Android Studio открыта не в той папке
+
+Если Android Studio не видит модуль `app`, проверьте, что открыта папка:
+
+```text
+C:\FoodiaryDemo\Foodiary
+```
+
+а не общий корень архива.
+
 ### В поле `Module` доступно только `<no module>`
 
 Если при создании Android App configuration в поле `Module` доступно только `<no module>`, Android Studio еще не импортировала Gradle-модуль `app`. В такой ситуации запуск через Run Configuration не поможет, пока не будет исправлена причина Gradle Sync.
@@ -369,16 +379,6 @@ Root project 'Foodiary'
 ```
 
 Если команда `gradlew.bat projects` не показывает `Project ':app'`, Android Studio тоже не сможет запустить приложение через `Run`.
-
-### Android Studio открыта не в той папке
-
-Если Android Studio не видит модуль `app`, проверьте, что открыта папка:
-
-```text
-C:\FoodiaryDemo\Foodiary
-```
-
-а не общий корень архива.
 
 ### Используется слишком старая Java
 
