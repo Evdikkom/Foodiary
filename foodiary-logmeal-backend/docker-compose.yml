@@ -1,0 +1,9 @@
+services:
+  foodiary-logmeal-backend:
+    build: .
+    container_name: foodiary-logmeal-backend
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

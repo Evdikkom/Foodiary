@@ -1,0 +1,166 @@
+package com.example.foodiary.data.local.seed
+
+import com.example.foodiary.data.local.entity.FoodEntity
+
+object SeedFoodCatalog {
+
+    // Generic reference values are stored per 100 g; branded/barcode imports should override them with label data.
+    val foods: List<FoodEntity> = listOf(
+        food("chicken_breast", "Куриная грудка", 165.0, 31.0, 3.6, 0.0, "protein"),
+        food("chicken_thigh", "Куриное бедро без кожи", 177.0, 24.0, 8.0, 0.0, "protein"),
+        food("turkey_fillet", "Филе индейки", 136.0, 29.5, 2.0, 0.0, "protein"),
+        food("beef_lean", "Говядина постная", 202.0, 29.5, 8.4, 0.0, "protein"),
+        food("pork_tenderloin", "Свиная вырезка", 147.0, 26.0, 4.0, 0.0, "protein"),
+        food("egg", "Яйцо куриное варёное", 155.0, 12.6, 10.6, 1.1, "protein"),
+        food("egg_white", "Яичный белок", 52.0, 10.9, 0.2, 0.7, "protein"),
+        food("salmon", "Лосось", 208.0, 20.0, 13.0, 0.0, "protein"),
+        food("trout", "Форель", 141.0, 20.5, 6.2, 0.0, "protein"),
+        food("tuna", "Тунец", 144.0, 23.0, 4.9, 0.0, "protein"),
+        food("cod", "Треска", 82.0, 18.0, 0.7, 0.0, "protein"),
+        food("herring", "Сельдь", 158.0, 18.0, 9.0, 0.0, "protein"),
+        food("mackerel", "Скумбрия", 205.0, 19.0, 14.0, 0.0, "protein"),
+        food("sardines", "Сардины", 208.0, 25.0, 11.0, 0.0, "protein"),
+        food("shrimp", "Креветки", 99.0, 24.0, 0.3, 0.2, "protein"),
+        food("squid", "Кальмар", 92.0, 15.6, 1.4, 3.1, "protein"),
+        food("tofu", "Тофу", 76.0, 8.0, 4.8, 1.9, "protein"),
+        food("tempeh", "Темпе", 193.0, 20.0, 11.0, 9.0, "protein"),
+        food("lentils", "Чечевица варёная", 116.0, 9.0, 0.4, 20.1, "protein"),
+        food("chickpeas", "Нут варёный", 164.0, 8.9, 2.6, 27.4, "protein"),
+        food("beans_red", "Фасоль красная варёная", 127.0, 8.7, 0.5, 22.8, "protein"),
+        food("edamame", "Эдамаме", 121.0, 11.9, 5.2, 8.9, "protein"),
+        food("hummus", "Хумус домашний", 177.0, 4.9, 8.6, 20.1, "protein"),
+
+        food("milk_2_5", "Молоко 2.5%", 52.0, 2.9, 2.5, 4.7, "dairy"),
+        food("kefir_2_5", "Кефир 2.5%", 53.0, 3.0, 2.5, 4.0, "dairy"),
+        food("greek_yogurt", "Греческий йогурт", 73.0, 9.0, 2.0, 3.6, "dairy"),
+        food("natural_yogurt", "Йогурт натуральный", 61.0, 3.5, 3.3, 4.7, "dairy"),
+        food("skyr", "Скир", 63.0, 11.0, 0.2, 4.0, "dairy"),
+        food("cottage_cheese", "Творог 5%", 121.0, 17.0, 5.0, 3.0, "dairy"),
+        food("cottage_cheese_lowfat", "Творог обезжиренный", 86.0, 18.0, 0.6, 3.3, "dairy"),
+        food("ryazhenka", "Ряженка", 67.0, 3.0, 4.0, 4.2, "dairy"),
+        food("ricotta", "Рикотта цельномолочная", 150.0, 7.5, 10.2, 7.3, "dairy"),
+        food("mozzarella", "Моцарелла", 299.0, 22.2, 22.1, 2.4, "dairy"),
+        food("feta", "Фета", 264.0, 14.0, 21.0, 4.1, "dairy"),
+        food("cheese", "Сыр полутвёрдый", 350.0, 24.0, 27.0, 1.0, "dairy"),
+        food("sour_cream_15", "Сметана 15%", 158.0, 2.6, 15.0, 3.0, "dairy"),
+
+        food("rice", "Рис варёный", 130.0, 2.7, 0.3, 28.2, "grain"),
+        food("brown_rice", "Бурый рис варёный", 123.0, 2.7, 1.0, 25.6, "grain"),
+        food("buckwheat", "Гречка варёная", 92.0, 3.4, 0.6, 19.9, "grain"),
+        food("oatmeal", "Овсяные хлопья", 366.0, 12.3, 6.2, 61.8, "grain"),
+        food("oat_porridge", "Овсяная каша на воде", 68.0, 2.4, 1.4, 12.0, "grain"),
+        food("quinoa", "Киноа варёная", 120.0, 4.4, 1.9, 21.3, "grain"),
+        food("bulgur", "Булгур варёный", 83.0, 3.1, 0.2, 18.6, "grain"),
+        food("couscous", "Кускус варёный", 112.0, 3.8, 0.2, 23.2, "grain"),
+        food("barley", "Перловка варёная", 123.0, 2.3, 0.4, 28.2, "grain"),
+        food("pasta", "Паста варёная", 158.0, 5.8, 0.9, 30.9, "grain"),
+        food("whole_wheat_pasta", "Паста цельнозерновая варёная", 149.0, 6.0, 1.7, 30.1, "grain"),
+        food("wholegrain_bread", "Хлеб цельнозерновой", 247.0, 8.5, 3.4, 41.0, "grain"),
+        food("rye_bread", "Хлеб ржаной", 259.0, 8.5, 3.3, 48.3, "grain"),
+        food("lavash", "Лаваш", 275.0, 9.1, 1.2, 56.0, "grain"),
+        food("potato", "Картофель варёный", 86.0, 1.7, 0.1, 20.0, "grain"),
+        food("sweet_potato", "Батат", 86.0, 1.6, 0.1, 20.1, "grain"),
+        food("corn", "Кукуруза варёная", 96.0, 3.4, 1.5, 21.0, "grain"),
+
+        food("apple", "Яблоко", 52.0, 0.3, 0.2, 14.0, "fruit"),
+        food("banana", "Банан", 89.0, 1.1, 0.3, 22.8, "fruit"),
+        food("pear", "Груша", 57.0, 0.4, 0.1, 15.0, "fruit"),
+        food("orange", "Апельсин", 47.0, 0.9, 0.1, 11.8, "fruit"),
+        food("mandarin", "Мандарин", 53.0, 0.8, 0.3, 13.3, "fruit"),
+        food("grapefruit", "Грейпфрут", 42.0, 0.8, 0.1, 10.7, "fruit"),
+        food("lemon", "Лимон", 29.0, 1.1, 0.3, 9.3, "fruit"),
+        food("kiwi", "Киви", 61.0, 1.1, 0.5, 14.7, "fruit"),
+        food("grapes", "Виноград", 69.0, 0.7, 0.2, 18.1, "fruit"),
+        food("strawberries", "Клубника", 32.0, 0.7, 0.3, 7.7, "fruit"),
+        food("blueberries", "Голубика", 57.0, 0.7, 0.3, 14.5, "fruit"),
+        food("raspberries", "Малина", 52.0, 1.2, 0.7, 12.0, "fruit"),
+        food("berries_mix", "Ягодный микс", 50.0, 0.8, 0.3, 11.0, "fruit"),
+        food("watermelon", "Арбуз", 30.0, 0.6, 0.2, 7.6, "fruit"),
+        food("melon", "Дыня", 34.0, 0.8, 0.2, 8.2, "fruit"),
+        food("plum", "Слива", 46.0, 0.7, 0.3, 11.4, "fruit"),
+        food("peach", "Персик", 39.0, 0.9, 0.3, 9.5, "fruit"),
+        food("mango", "Манго", 60.0, 0.8, 0.4, 15.0, "fruit"),
+        food("pineapple", "Ананас", 50.0, 0.5, 0.1, 13.1, "fruit"),
+        food("dried_apricots", "Курага", 241.0, 3.4, 0.5, 62.6, "fruit"),
+        food("raisins", "Изюм", 299.0, 3.1, 0.5, 79.2, "fruit"),
+        food("dates", "Финики", 282.0, 2.5, 0.4, 75.0, "fruit"),
+
+        food("tomato", "Помидор", 18.0, 0.9, 0.2, 3.9, "vegetable"),
+        food("cucumber", "Огурец", 15.0, 0.7, 0.1, 3.6, "vegetable"),
+        food("broccoli", "Брокколи", 34.0, 2.8, 0.4, 6.6, "vegetable"),
+        food("spinach", "Шпинат", 23.0, 2.9, 0.4, 3.6, "vegetable"),
+        food("lettuce", "Салат листовой", 15.0, 1.4, 0.2, 2.9, "vegetable"),
+        food("carrot", "Морковь", 41.0, 0.9, 0.2, 9.6, "vegetable"),
+        food("beetroot", "Свёкла", 43.0, 1.6, 0.2, 9.6, "vegetable"),
+        food("cabbage", "Капуста белокочанная", 25.0, 1.3, 0.1, 5.8, "vegetable"),
+        food("cauliflower", "Цветная капуста", 25.0, 1.9, 0.3, 5.0, "vegetable"),
+        food("bell_pepper", "Болгарский перец", 31.0, 1.0, 0.3, 6.0, "vegetable"),
+        food("zucchini", "Кабачок", 17.0, 1.2, 0.3, 3.1, "vegetable"),
+        food("eggplant", "Баклажан", 25.0, 1.0, 0.2, 5.9, "vegetable"),
+        food("onion", "Лук репчатый", 40.0, 1.1, 0.1, 9.3, "vegetable"),
+        food("garlic", "Чеснок", 149.0, 6.4, 0.5, 33.1, "vegetable"),
+        food("mushrooms", "Шампиньоны", 22.0, 3.1, 0.3, 3.3, "vegetable"),
+        food("pumpkin", "Тыква", 26.0, 1.0, 0.1, 6.5, "vegetable"),
+        food("radish", "Редис", 16.0, 0.7, 0.1, 3.4, "vegetable"),
+        food("green_peas", "Зелёный горошек", 81.0, 5.4, 0.4, 14.5, "vegetable"),
+        food("green_beans", "Стручковая фасоль", 31.0, 1.8, 0.2, 7.0, "vegetable"),
+        food("avocado", "Авокадо", 160.0, 2.0, 14.7, 8.5, "vegetable"),
+
+        food("almonds", "Миндаль", 579.0, 21.2, 49.9, 21.6, "nuts"),
+        food("walnuts", "Грецкий орех", 654.0, 15.2, 65.2, 13.7, "nuts"),
+        food("cashews", "Кешью", 553.0, 18.2, 43.9, 30.2, "nuts"),
+        food("pistachios", "Фисташки", 560.0, 20.2, 45.3, 27.2, "nuts"),
+        food("peanuts", "Арахис", 567.0, 25.8, 49.2, 16.1, "nuts"),
+        food("peanut_butter", "Арахисовая паста", 588.0, 25.0, 50.0, 20.0, "nuts"),
+        food("sunflower_seeds", "Семечки подсолнечника", 584.0, 20.8, 51.5, 20.0, "nuts"),
+        food("pumpkin_seeds", "Тыквенные семечки", 559.0, 30.2, 49.0, 10.7, "nuts"),
+        food("chia_seeds", "Семена чиа", 486.0, 16.5, 30.7, 42.1, "nuts"),
+        food("flaxseed", "Семена льна", 534.0, 18.3, 42.2, 28.9, "nuts"),
+        food("sesame_seeds", "Кунжут", 573.0, 17.7, 49.7, 23.4, "nuts"),
+        food("olive_oil", "Оливковое масло", 884.0, 0.0, 100.0, 0.0, "nuts"),
+        food("butter", "Сливочное масло", 717.0, 0.9, 81.0, 0.1, "dairy"),
+
+        food("sausage", "Сосиска", 301.0, 11.0, 27.0, 2.0, "protein"),
+        food("chips", "Чипсы картофельные", 532.0, 6.4, 34.0, 53.8, "grain"),
+        food("dark_chocolate", "Тёмный шоколад", 546.0, 4.9, 31.0, 61.0, "grain"),
+        food("honey", "Мёд", 304.0, 0.3, 0.0, 82.4, "grain"),
+        food("jam", "Варенье", 260.0, 0.3, 0.1, 68.0, "grain"),
+        food("sugar", "Сахар", 387.0, 0.0, 0.0, 100.0, "grain"),
+        food("cookie", "Печенье", 502.0, 6.0, 24.0, 66.0, "grain"),
+        food("ice_cream", "Мороженое", 207.0, 3.5, 11.0, 24.0, "dairy"),
+        food("mayonnaise", "Майонез", 680.0, 1.0, 75.0, 2.6, "dairy"),
+        food("ketchup", "Кетчуп", 101.0, 1.0, 0.1, 27.4, "vegetable"),
+        food("orange_juice", "Апельсиновый сок", 45.0, 0.7, 0.2, 10.4, "fruit"),
+        food("tomato_juice", "Томатный сок", 17.0, 0.8, 0.1, 3.5, "vegetable"),
+        food("black_coffee", "Кофе чёрный", 2.0, 0.1, 0.0, 0.0, "grain"),
+        food("tea", "Чай без сахара", 1.0, 0.0, 0.0, 0.0, "grain")
+    )
+
+    val foodIds: Set<String> = foods.map { it.id }.toSet()
+
+    private fun food(
+        id: String,
+        name: String,
+        caloriesPer100g: Double,
+        proteinPer100g: Double,
+        fatPer100g: Double,
+        carbsPer100g: Double,
+        category: String
+    ): FoodEntity {
+        return FoodEntity(
+            id = id,
+            name = name,
+            imageUrl = imageFor(id),
+            caloriesPer100g = caloriesPer100g,
+            proteinPer100g = proteinPer100g,
+            fatPer100g = fatPer100g,
+            carbsPer100g = carbsPer100g,
+            category = category
+        )
+    }
+
+    private fun imageFor(id: String): String {
+        return "drawable://seed_$id"
+    }
+
+}
