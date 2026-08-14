@@ -423,11 +423,44 @@ C:\FoodiaryDemo
 - итоговый APK создавался в `Foodiary/app/build/outputs/apk/debug/app-debug.apk`;
 - сгенерированные артефакты сборки не включались в итоговый архив исходного кода.
 
-## Автор
+## Запуск тестов
 
-Евдокимов Артемий Русланович.
+В проекте есть два набора автотестов:
 
+- локальные unit-тесты в `Foodiary/app/src/test`;
+- instrumented/UI-тесты в `Foodiary/app/src/androidTest`, которые требуют запущенного эмулятора или подключенного Android-устройства.
 
+Локальные unit-тесты запускаются без эмулятора:
+
+```powershell
+cd D:\FoodiaryDemo\Foodiary
+.\gradlew.bat :app:testDebugUnitTest
+```
+
+Эти тесты проверяют доменную логику, работу use case-ов, маппинг данных, репозитории, валидацию и отдельные элементы presentation-слоя. После запуска HTML-отчет Gradle будет доступен по пути:
+
+```text
+Foodiary\app\build\reports\tests\testDebugUnitTest\index.html
+```
+
+Для запуска instrumented/UI-тестов сначала убедитесь, что устройство видно через ADB:
+
+```powershell
+adb devices
+```
+
+Затем выполните:
+
+```powershell
+cd D:\FoodiaryDemo\Foodiary
+.\gradlew.bat :app:connectedDebugAndroidTest
+```
+
+Эти тесты проверяют сценарии работы приложения на Android-устройстве: стартовую навигацию, onboarding, профиль, дневник, аналитику, настройки уведомлений и smoke-сценарии добавления продуктов.
+
+Если эмулятор работает нестабильно, для instrumented-тестов лучше использовать физическое устройство или создать более легкий AVD. Локальные unit-тесты при этом остаются доступными и не зависят от состояния эмулятора.
+
+Дополнительно в проекте есть диагностический live-тест для Open Food Facts (`OpenFoodFactsLiveSearchDiagnosticTest`). При обычном запуске unit-тестов он пропускается, потому что зависит от внешнего сервиса и интернет-соединения.
 
 
 
