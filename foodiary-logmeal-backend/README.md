@@ -144,13 +144,3 @@ curl -X POST "http://localhost:8080/api/v1/vision/analyze-food" \
 
 3. Логика нормализации ответа сделана устойчивой, но LogMeal может менять состав полей в зависимости от плана и модели.
 
----
-
-## Следующий серверный пакет
-
-Следующим этапом имеет смысл добавить:
-- user confirmation flow;
-- confirm dish endpoint;
-- confirm quantity endpoint;
-- отдельный Android-friendly DTO под экран подтверждения;
-- кэширование и журнал запросов.
